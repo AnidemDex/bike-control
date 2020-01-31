@@ -11,11 +11,11 @@
  * Al presionar cualquiera de los frenos, un pin digital se activa
 */
 
-const int back_led[3] = {1, 2, 3};
-const int front_led[3] = {4, 5, 6};
-const int botonIzquierda = 7
-const int botonDerecha = 8
-const int botonCentro = 9
+int back_led[3] = {1, 2, 3};
+int front_led[3] = {4, 5, 6};
+int botonIzquierda = 7;
+int botonDerecha = 8;
+int botonCentro = 9;
 Bike bike(botonIzquierda, botonDerecha, botonCentro, front_led, back_led);
 
 int buttonState = 0;
@@ -27,7 +27,7 @@ void setup() {
 }
 
 void loop() {
-  if (bike.controlPinHasChanged())
+  if (bike.controlStateHasChanged())
   {
     if (bike.getControlState() == HIGH)
     {
@@ -45,5 +45,30 @@ void loop() {
       bike.turnOff(bike.backLeftLight);
     }
   }
+
+  if (bike.leftBrakeStateHasChanged())
+  {
+    if (bike.getLeftBrakeState() == HIGH)
+    {
+      bike.leftCanBlink = true;
+    }
+    else{
+      bike.leftCanBlink = false;
+    }
+  }
+
+  if (bike.rightBrakeStateHasChanged())
+  {
+    if (bike.getRightBrakeState() == HIGH)
+    {
+      bike.rightCanBlink = true;
+    }
+    else
+    {
+      bike.rightCanBlink = false;
+    }
+  }
+
+  bike.tryToBlink(1000);
 
 }
