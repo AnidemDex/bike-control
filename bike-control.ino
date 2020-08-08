@@ -1,4 +1,5 @@
-#include <BikeClass.h>
+#include "BikeClass.h"
+#include "SoftwareSerial.h"
 /*
  * No olvides importar BikeClass.zip en el programa
  * 
@@ -11,11 +12,11 @@
  * Al presionar cualquiera de los frenos, un pin digital se activa
 */
 
-int back_led[3] = {1, 2, 3};
-int front_led[3] = {4, 5, 6};
-int botonIzquierda = 7;
-int botonDerecha = 8;
-int botonCentro = 9;
+int back_led[3] = {2, 3, 4};
+int front_led[3] = {5, 6, 7};
+int botonIzquierda = 8;
+int botonDerecha = 9;
+int botonCentro = 10;
 Bike bike(botonIzquierda, botonDerecha, botonCentro, front_led, back_led);
 
 int buttonState = 0;
