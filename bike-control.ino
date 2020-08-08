@@ -23,6 +23,7 @@ int buttonState = 0;
 int lastButtonState = 0;
 
 void setup() {
+  Serial.begin(9600);
   bike.begin();
 
 }
