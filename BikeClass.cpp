@@ -34,7 +34,7 @@ Bike::Bike(int lBrakePin, int rBrakePin, int controlPin, int frontLed[], int bac
 
   _leftLightState = LOW;
   _rightLightState = LOW;
-  _lastReadState = LOW;
+  _lastReadState = HIGH;
 
   _controlState = false;
   _leftBrakeState = false;
@@ -128,7 +128,12 @@ void Bike::tryToBlink(long interval)
 
 bool Bike::getControlState()
 {
-  Serial.println("Estado de control: " + String(_controlState));
+  if(_lastControlState != _controlState)
+  {
+    
+  }
+  Serial.print("Estado de control: ");
+  Serial.println(String(_controlState));
   return _controlState;
 }
 
@@ -140,16 +145,17 @@ bool Bike::controlStateHasChanged()
   {
     Serial.println("Boton de control presionado");
     
-    if(_controlState == HIGH)
+    if(_controlState == true)
     {
-      _controlState == LOW;
+      _controlState == false;
     }
     else
     {
-      _controlState == HIGH;
+      _controlState == true;
     }
 
     _previousMillis = millis();
+    _lastControlState = _controlState;
   }
 
   _lastReadState == _readState;
