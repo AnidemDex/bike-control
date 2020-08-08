@@ -136,7 +136,7 @@ bool Bike::controlStateHasChanged()
 {
   int _readState = digitalRead(_control);
 
-  if (_readState == HIGH && _lastReadState == LOW && millis() - previousMillis > 200)
+  if (_readState == HIGH && _lastReadState == LOW && millis() - _previousMillis > 200)
   {
     Serial.println("Boton de control presionado");
     
@@ -149,10 +149,10 @@ bool Bike::controlStateHasChanged()
       _controlState == HIGH;
     }
 
-    previousMillis = millis();
+    _previousMillis = millis();
   }
 
-  _lastReadState == readState;
+  _lastReadState == _readState;
 
 }
 
