@@ -8,7 +8,6 @@ Created by David alias Dastmema(Candy), 2019
 #define BikeClass_h
 
 #include "Arduino.h"
-#include "SoftwareSerial.h"
 
 class Bike{
   public:
@@ -55,6 +54,8 @@ class Bike{
     bool _lastControlState;
     bool _lastLeftBrakeState;
     bool _lastRightBrakeState;
+
+    bool _lastReadState;
 
     /*
      * 0 -> Left

@@ -5,10 +5,9 @@ Created by David alias Dastmema(Candy), 2019
 */
 #include "Arduino.h"
 #include "BikeClass.h"
-#include "SoftwareSerial.h"
 Bike::Bike(int lBrakePin, int rBrakePin, int controlPin, int frontLed[], int backLed[])
 {
-  Serial.println("Iniciando sistema de bicicleta...");
+  
   
   _leftBrake = lBrakePin;
   _rightBrake = rBrakePin;
@@ -35,6 +34,7 @@ Bike::Bike(int lBrakePin, int rBrakePin, int controlPin, int frontLed[], int bac
 
   _leftLightState = LOW;
   _rightLightState = LOW;
+  _lastReadState = LOW;
 
   _controlState = false;
   _leftBrakeState = false;
@@ -43,18 +43,14 @@ Bike::Bike(int lBrakePin, int rBrakePin, int controlPin, int frontLed[], int bac
   _lastLeftBrakeState = false;
   _lastRightBrakeState = false;
 
-  Serial.println("Sistema iniciado :D");
-  Serial.println("-------[ Info ]--------");
-  Serial.print("Frenos ->\n");
-  Serial.print("    Derecho: " + String(_leftBrakeState) + "Pin " + String(_rightBrake) + "\n");
-  Serial.print("    Izquierdo: " + String(_rightBrakeState) + "Pin " + String(_leftBrake) + "\n");
-  Serial.print("Sistema Central ->\n");
-  Serial.print("    Control: " + String(_controlState) + "Pin " + String(_control) +"\n");
+  
 }
 
 
 void Bike::begin()
 {
+  Serial.println("Iniciando sistema de luces...");
+  
   pinMode(_leftBrake, INPUT);
   pinMode(_rightBrake, INPUT);
   pinMode(_control, INPUT);
@@ -63,6 +59,14 @@ void Bike::begin()
     pinMode(_front[i], OUTPUT);
     pinMode(_back[i], OUTPUT);
   }
+
+  Serial.println("Sistema iniciado");
+  Serial.println("-------[ Info ]--------");
+  Serial.print("Frenos ->\n");
+  Serial.print("    Derecho:\t" + String(_leftBrakeState) + " Pin " + String(_rightBrake) + "\n");
+  Serial.print("    Izquierdo:\t" + String(_rightBrakeState) + " Pin " + String(_leftBrake) + "\n");
+  Serial.print("Sistema Central ->\n");
+  Serial.print("    Control:\t" + String(_controlState) + " Pin " + String(_control) +"\n");
 }
 
 void Bike::turnOn(int light)
@@ -124,24 +128,32 @@ void Bike::tryToBlink(long interval)
 
 bool Bike::getControlState()
 {
-  return _lastControlState;
+  Serial.println("Estado de control: " + String(_controlState));
+  return _controlState;
 }
 
 bool Bike::controlStateHasChanged()
 {
-  _controlState = digitalRead(_control) == HIGH;
+  int _readState = digitalRead(_control);
 
-  if (_controlState != _lastControlState)
+  if (_readState == HIGH && _lastReadState == LOW && millis() - previousMillis > 200)
   {
-    _lastControlState = _controlState;
-    return true;
+    Serial.println("Boton de control presionado");
+    
+    if(_controlState == HIGH)
+    {
+      _controlState == LOW;
+    }
+    else
+    {
+      _controlState == HIGH;
+    }
+
+    previousMillis = millis();
   }
-  else
-  {
-    _lastControlState = _controlState;
-    return false;
-  }
-  
+
+  _lastReadState == readState;
+
 }
 
 bool Bike::getLeftBrakeState()

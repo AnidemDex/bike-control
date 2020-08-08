@@ -1,5 +1,4 @@
 #include "BikeClass.h"
-#include "SoftwareSerial.h"
 /*
  * No olvides importar BikeClass.zip en el programa
  * 
@@ -24,28 +23,28 @@ int lastButtonState = 0;
 
 void setup() {
   Serial.begin(9600);
+  while(!Serial); //Linea añadida al usar un arduino Leonardo para pruebas
   bike.begin();
 
 }
 
 void loop() {
-  if (bike.controlStateHasChanged())
+  bike.controlStateHasChanged();
+  
+  if (bike.getControlState() == HIGH)
   {
-    if (bike.getControlState() == HIGH)
-    {
-      bike.turnOn(bike.frontLight);
-      bike.turnOn(bike.backLight);
-    }
-    else
-    {
-      bike.turnOff(bike.frontLight);
-      bike.turnOff(bike.frontRightLight);
-      bike.turnOff(bike.frontLeftLight);
+    bike.turnOn(bike.frontLight);
+    bike.turnOn(bike.backLight);
+  }
+  else
+  {
+    bike.turnOff(bike.frontLight);
+    bike.turnOff(bike.frontRightLight);
+    bike.turnOff(bike.frontLeftLight);
 
-      bike.turnOff(bike.backLight);
-      bike.turnOff(bike.backRightLight);
-      bike.turnOff(bike.backLeftLight);
-    }
+    bike.turnOff(bike.backLight);
+    bike.turnOff(bike.backRightLight);
+    bike.turnOff(bike.backLeftLight);
   }
 
   if (bike.leftBrakeStateHasChanged())
