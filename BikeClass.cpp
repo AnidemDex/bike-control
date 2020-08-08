@@ -51,9 +51,9 @@ void Bike::begin()
 {
   Serial.println("Iniciando sistema de luces...");
   
-  pinMode(_leftBrake, INPUT);
-  pinMode(_rightBrake, INPUT);
-  pinMode(_control, INPUT);
+  pinMode(_leftBrake, INPUT_PULLUP);
+  pinMode(_rightBrake, INPUT_PULLUP);
+  pinMode(_control, INPUT_PULLUP);
   
   for(int i=0;i<3;i++){
     pinMode(_front[i], OUTPUT);
@@ -136,7 +136,7 @@ bool Bike::controlStateHasChanged()
 {
   int _readState = digitalRead(_control);
 
-  if (_readState == HIGH && _lastReadState == LOW && millis() - _previousMillis > 200)
+  if (_readState == LOW && _lastReadState == HIGH && millis() - _previousMillis > 200)
   {
     Serial.println("Boton de control presionado");
     
