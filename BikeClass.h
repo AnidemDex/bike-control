@@ -41,7 +41,7 @@ class Bike{
   private:
     long _previousMillis;
 
-    int bounceTime = 100;
+    int bounceTime;
 
     int _leftBrake;
     int _rightBrake;

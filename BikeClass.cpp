@@ -7,7 +7,8 @@ Created by David alias Dastmema(Candy), 2019
 #include "BikeClass.h"
 Bike::Bike(int lBrakePin, int rBrakePin, int controlPin, int frontLed[], int backLed[])
 {
-  
+
+  int bounceTime = 200;
   
   _leftBrake = lBrakePin;
   _rightBrake = rBrakePin;
@@ -109,6 +110,13 @@ void Bike::tryToBlink(long interval)
         Serial.println("Izquiera apagado");
       }
     }
+    else
+    {
+      _leftLightState = LOW;
+      turnOff(frontLeftLight);
+      turnOff(backLeftLight);
+      Serial.println("Izquiera apagado");      
+    }
 
     if(rightCanBlink)
     {
@@ -126,6 +134,13 @@ void Bike::tryToBlink(long interval)
         turnOff(backRightLight);
         Serial.println("Derecha apagado");
       }
+    }
+    else
+    {
+      _rightLightState = LOW;
+      turnOff(frontRightLight);
+      turnOff(backRightLight);
+      Serial.println("Derecha apagado");
     }
   }
 
