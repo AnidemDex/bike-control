@@ -74,10 +74,7 @@ void Bike::begin()
 
 void Bike::turnOn(int light)
 {
-  if (getControlState() == HIGH)
-  {
     digitalWrite(light, HIGH);
-  }
 }
 
 void Bike::turnOff(int light)
