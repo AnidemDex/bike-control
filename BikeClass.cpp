@@ -32,8 +32,8 @@ Bike::Bike(int lBrakePin, int rBrakePin, int controlPin, int frontLed[], int bac
   rightCanBlink = false;
   leftCanBlink = false;
 
-  _leftLightState = HIGH;
-  _rightLightState = HIGH;
+  _leftLightState = LOW;
+  _rightLightState = LOW;
   _lastReadState = HIGH;
   _lastLeftState = HIGH;
   _lastRightState = HIGH;
@@ -96,15 +96,17 @@ void Bike::tryToBlink(long interval)
     {
       if(_leftLightState == LOW)
       {
-        _leftLightState == HIGH;
+        _leftLightState = HIGH;
         turnOn(frontLeftLight);
         turnOn(backLeftLight);
+        Serial.println("Izquiera encendido");
       }
       else
       {
-        _leftLightState == LOW;
+        _leftLightState = LOW;
         turnOff(frontLeftLight);
         turnOff(backLeftLight);
+        Serial.println("Izquiera apagado");
       }
     }
 
@@ -112,15 +114,17 @@ void Bike::tryToBlink(long interval)
     {
       if(_rightLightState == LOW)
       {
-        _rightLightState == HIGH;
+        _rightLightState = HIGH;
         turnOn(frontRightLight);
         turnOn(backRightLight);
+        Serial.println("Derecha encendido");
       }
       else
       {
-        _rightLightState == LOW;
+        _rightLightState = LOW;
         turnOff(frontRightLight);
         turnOff(backRightLight);
+        Serial.println("Derecha apagado");
       }
     }
   }
