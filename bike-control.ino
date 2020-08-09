@@ -47,27 +47,24 @@ void loop() {
     bike.turnOff(bike.backLeftLight);
   }
 
-  if (bike.leftBrakeStateHasChanged())
+  bike.leftBrakeStateHasChanged();
+  bike.rightBrakeStateHasChanged();
+
+  if (bike.getLeftBrakeState() == HIGH)
   {
-    if (bike.getLeftBrakeState() == HIGH)
-    {
-      bike.leftCanBlink = true;
-    }
-    else{
-      bike.leftCanBlink = false;
-    }
+    bike.leftCanBlink = true;
+  }
+  else{
+    bike.leftCanBlink = false;
   }
 
-  if (bike.rightBrakeStateHasChanged())
+  if (bike.getRightBrakeState() == HIGH)
   {
-    if (bike.getRightBrakeState() == HIGH)
-    {
-      bike.rightCanBlink = true;
-    }
-    else
-    {
-      bike.rightCanBlink = false;
-    }
+    bike.rightCanBlink = true;
+  }
+  else
+  {
+    bike.rightCanBlink = false;
   }
 
   bike.tryToBlink(1000);

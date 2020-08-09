@@ -32,9 +32,11 @@ Bike::Bike(int lBrakePin, int rBrakePin, int controlPin, int frontLed[], int bac
   rightCanBlink = false;
   leftCanBlink = false;
 
-  _leftLightState = LOW;
-  _rightLightState = LOW;
+  _leftLightState = HIGH;
+  _rightLightState = HIGH;
   _lastReadState = HIGH;
+  _lastLeftState = HIGH;
+  _lastRightState = HIGH;
 
   _controlState = false;
   _leftBrakeState = false;
@@ -141,7 +143,7 @@ bool Bike::controlStateHasChanged()
 {
   int _readState = digitalRead(_control);
 
-  if (_readState == LOW && _lastReadState == HIGH && millis() - _previousMillis > 300)
+  if (_readState == LOW && _lastReadState == HIGH && millis() - _previousMillis > bounceTime)
   {
     Serial.println("Boton de control presionado");
     _lastControlState = _controlState;
@@ -164,42 +166,72 @@ bool Bike::controlStateHasChanged()
 
 bool Bike::getLeftBrakeState()
 {
-  return _lastLeftBrakeState;
+  if(_lastLeftBrakeState != _leftBrakeState)
+  {
+    Serial.print("Estado de freno izquierdo: ");
+    Serial.println(String(_leftBrakeState));
+    _lastLeftBrakeState = _leftBrakeState;
+  }
+  return _leftBrakeState;
 }
 
 bool Bike::leftBrakeStateHasChanged()
 {
-  _leftBrakeState = digitalRead(_leftBrake) == HIGH;
+  int _readState = digitalRead(_leftBrake);
 
-  if (_leftBrakeState != _lastLeftBrakeState)
+  if (_readState == LOW && _lastLeftState == HIGH && millis() - _previousMillis > bounceTime)
   {
+    Serial.println("Boton de control presionado");
     _lastLeftBrakeState = _leftBrakeState;
-    return true;
+    
+    if(_leftBrakeState == true)
+    {
+      _leftBrakeState = false;
+    }
+    else
+    {
+      _leftBrakeState = true;
+    }
+
+    _previousMillis = millis();
   }
-  else
-  {
-    _lastRightBrakeState = _leftBrakeState;
-    return false;
-  }
+
+  _lastLeftState = _readState;
+  
 }
 
 bool Bike::getRightBrakeState()
 {
-  return _lastRightBrakeState;
+  if(_lastRightBrakeState != _rightBrakeState)
+  {
+    Serial.print("Estado de freno derecho: ");
+    Serial.println(String(_rightBrakeState));
+    _lastRightBrakeState = _rightBrakeState;
+  }
+  return _rightBrakeState;
 }
 
 bool Bike::rightBrakeStateHasChanged()
 {
-  _rightBrakeState = digitalRead(_rightBrake) == HIGH;
+  int _readState = digitalRead(_rightBrake);
 
-  if (_rightBrakeState != _lastRightBrakeState)
+  if (_readState == LOW && _lastRightState == HIGH && millis() - _previousMillis > bounceTime)
   {
+    Serial.println("Boton de control presionado");
     _lastRightBrakeState = _rightBrakeState;
-    return true;
+    
+    if(_rightBrakeState == true)
+    {
+      _rightBrakeState = false;
+    }
+    else
+    {
+      _rightBrakeState = true;
+    }
+
+    _previousMillis = millis();
   }
-  else
-  {
-    _lastRightBrakeState = _rightBrakeState;
-    return false;
-  }
+
+  _lastRightState = _readState;
+  
 }

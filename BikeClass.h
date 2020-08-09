@@ -41,6 +41,8 @@ class Bike{
   private:
     long _previousMillis;
 
+    int bounceTime = 100;
+
     int _leftBrake;
     int _rightBrake;
     int _control;
@@ -56,6 +58,8 @@ class Bike{
     bool _lastRightBrakeState;
 
     bool _lastReadState;
+    bool _lastLeftState;
+    bool _lastRightState;
 
     /*
      * 0 -> Left
