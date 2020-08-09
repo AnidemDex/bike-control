@@ -39,12 +39,7 @@ void loop() {
   else
   {
     bike.turnOff(bike.frontLight);
-    bike.turnOff(bike.frontRightLight);
-    bike.turnOff(bike.frontLeftLight);
-
     bike.turnOff(bike.backLight);
-    bike.turnOff(bike.backRightLight);
-    bike.turnOff(bike.backLeftLight);
   }
 
   bike.leftBrakeStateHasChanged();

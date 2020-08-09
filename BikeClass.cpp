@@ -8,7 +8,7 @@ Created by David alias Dastmema(Candy), 2019
 Bike::Bike(int lBrakePin, int rBrakePin, int controlPin, int frontLed[], int backLed[])
 {
 
-  int bounceTime = 200;
+  int bounceTime = 250;
   
   _leftBrake = lBrakePin;
   _rightBrake = rBrakePin;
